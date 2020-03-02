@@ -9,6 +9,7 @@ import networkx as nx
 
 # nltk.download('punkt')
 # nltk.download('stopwords')
+
 stopwords = stopwords.words('english')
 
 
