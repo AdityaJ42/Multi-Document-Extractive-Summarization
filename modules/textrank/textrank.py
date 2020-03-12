@@ -15,7 +15,7 @@ stopwords = stopwords.words('english')
 
 def get_embeddings():
 	embedding = {}
-	f = open('glove.6B.100d.txt', encoding='utf-8')
+	f = open('./textrank/glove.6B.100d.txt', encoding='utf-8')
 	for line in f:
 		values = line.split()
 		word = values[0]
@@ -74,4 +74,7 @@ class TextRank:
 		nx_graph = nx.from_numpy_array(matrix)
 		scores = nx.pagerank(nx_graph)
 		sentence_ranks = sorted(((scores[i], s) for i, s in enumerate(sentences)), reverse=True)
-		return sentence_ranks
+		extracted_sentences = []
+		for i in range(8):
+			extracted_sentences.append(sentence_ranks[i][1])
+		return '\n'.join(extracted_sentences)
