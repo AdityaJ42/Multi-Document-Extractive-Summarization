@@ -6,6 +6,8 @@ from nltk.tokenize import sent_tokenize
 from nltk.corpus import stopwords
 from sklearn.metrics.pairwise import cosine_similarity
 import networkx as nx
+import pke
+from nltk.corpus import stopwords
 
 # nltk.download('punkt')
 # nltk.download('stopwords')
@@ -61,16 +63,30 @@ class TextRank:
 		return sentence_vectors
 
 
-	def similarity_matrix(self, sentences, vectors):
-		sim_mat = np.zeros([len(sentences), len(sentences)])
-		for i in range(len(sentences)):
-			for j in range(len(sentences)):
+	def keyword_to_vectors(self, keywords):
+		keyword_embeddings = []
+		for keyword in keywords:
+			if len(keyword.split()) > 1:
+				v = sum([self.embeddings.get(w, np.zeros((100,))) for w in keyword.split()])/(len(keyword.split())+0.001)
+			else:
+				v = self.embeddings.get(keyword, np.zeros(100,))
+			keyword_embeddings.append(v)
+		return keyword_embeddings
+
+
+	def similarity_matrix(self, n, vectors, keyword_embeddings):
+		sim_mat = np.zeros([n, n])
+
+		for i in range(n):
+			for j in range(n):
 				if i != j:
 					sim_mat[i][j] = cosine_similarity(vectors[i].reshape(1, 100), vectors[j].reshape(1, 100))
+					for k in keyword_embeddings:
+						sim_mat[i][j] += cosine_similarity(vectors[i].reshape(1, 100), k.reshape(1, 100))
 		return sim_mat
 
 
-	def summarize(self, matrix, sentences):
+	def get_summary(self, matrix, sentences):
 		nx_graph = nx.from_numpy_array(matrix)
 		scores = nx.pagerank(nx_graph)
 		sentence_ranks = sorted(((scores[i], s) for i, s in enumerate(sentences)), reverse=True)

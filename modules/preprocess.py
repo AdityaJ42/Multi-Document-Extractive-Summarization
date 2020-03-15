@@ -1,3 +1,4 @@
+import docx
 import re
 from nltk.corpus import stopwords
 import spacy
@@ -16,6 +17,7 @@ class Preprocessor:
 			contents = fd.read()
 		return contents
 
+
 	def read_docx(self, file):
 		doc = docx.Document(file)
 		text = []
@@ -26,6 +28,7 @@ class Preprocessor:
 
 	def clean(self, text):
 		return text.strip().replace('\n', ' ')
+
 
 
 	def resolve_pronoun(self, text):

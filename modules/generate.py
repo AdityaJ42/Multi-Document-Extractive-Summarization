@@ -20,18 +20,19 @@ for folder in os.listdir(read_path):
 
 	contents = pp.clean(contents)
 	resolved_content = pp.resolve_pronoun(contents)
+	keyphrases = tr.get_keyphrases(contents)
 	sentences = pp.get_sentences(resolved_content)
 	og_sentences = sentences
 	sentences = pp.remove_stopwords(sentences)
 
 	vecs = tr.sent_to_vectors(sentences)
-	matrix = tr.similarity_matrix(sentences, vecs)
+	matrix = tr.similarity_matrix(sentences, vecs, keyphrases)
 	summary = tr.summarize(matrix, og_sentences)
 	
-	write_data = ['1. ' + og_sentences[0]]
+	write_data = [og_sentences[0]]
 	for k, i in enumerate(summary.split('\n')):
 		if i != og_sentences[0]:
-			write_data.append('{}. {}'.format(k + 2, i))
+			write_data.append(i)
 
 	with open(write_path + 'summary.txt', 'w') as fd:
 		fd.write('\n'.join(write_data))
