@@ -30,10 +30,9 @@ def get_embeddings():
 class TextRank:
 	def __init__(self):
 		self.embeddings = get_embeddings()
-
-
-	def read_data(self, path):
-		return pd.read_csv(path)
+		self.sentence_vectors = None
+		self.keyword_vectors = None
+		self.sentence_keyword_similarity = None
 
 
 	def get_sentences(self, text):
@@ -53,25 +52,32 @@ class TextRank:
 
 
 	def sent_to_vectors(self, sentences):
-		sentence_vectors = []
+		self.sentence_vectors = []
 		for i in sentences:
 			if len(i) != 0:
 				v = sum([self.embeddings.get(w, np.zeros((100,))) for w in i.split()])/(len(i.split())+0.001)
 			else:
 				v = np.zeros((100,))
-			sentence_vectors.append(v)
-		return sentence_vectors
+			self.sentence_vectors.append(v)
 
 
 	def keyword_to_vectors(self, keywords):
-		keyword_embeddings = []
+		self.keyword_vectors = []
 		for keyword in keywords:
 			if len(keyword.split()) > 1:
 				v = sum([self.embeddings.get(w, np.zeros((100,))) for w in keyword.split()])/(len(keyword.split())+0.001)
 			else:
 				v = self.embeddings.get(keyword, np.zeros(100,))
-			keyword_embeddings.append(v)
-		return keyword_embeddings
+			self.keyword_vectors.append(v)
+
+
+	def sent_keyword_similarity(self, sent_vec, keyword_vec):
+		self.sentence_keyword_similarity = np.zeros([len(sent_vec), 1])
+		for i in range(len(sent_vec)):
+			temp = 0
+			for j in range(len(keyword_vec)):
+				temp += cosine_similarity(sent_vec[i].reshape(1, 100), keyword_vec[j].reshape(1, 100))[0][0]
+			self.sentence_keyword_similarity[i] = round(temp / len(keyword_vec), 3)
 
 
 	def similarity_matrix(self, n, vectors, keyword_embeddings):
