@@ -32,6 +32,8 @@ class Summary:
 
 		# Maintain the original sentences of the documents for extraction
 		original_sentences = pp.get_sentences(complete_content)
+		if len(original_sentences) < len(sentences):
+			sentences = sentences[:len(original_sentences)]
 		
 		# Extraction of keyphrases
 		self.keywords = kp.get_keyphrases(resolved_content)
@@ -52,15 +54,29 @@ class Summary:
 		g = Graph(len(matrix))
 		g.graph = matrix
 		sentence_index = g.dijkstra(0, len(matrix) - 1)
-		extracted = [original_sentences[i] for i in sentence_index]
+		extracted_sentences = [sentences[i] for i in sentence_index]
 
-		"""
+		# Recompute similarity matrix for reduced sentences
+		tr.sent_to_vectors(extracted_sentences)
+		matrix = tr.similarity_matrix(len(extracted_sentences), tr.sentence_vectors, tr.keyword_vectors)
+
 		# Create summary based on sentence scores after TextRank iterations
-		self.summary = tr.get_summary(matrix, original_sentences)
+		sentences_used = [original_sentences[i] for i in sentence_index]
+		self.summary = tr.get_summary(matrix, sentences_used)
 		
 		# View Summary
 		return self.summary
-		"""
 
-s = Summary()
-s.summarize(PATH_TO_FILES)
+read_path = 'PATH_TO_INPUT_DOCS'
+write_path = 'PATH_TO_OUTPUT_SUMMARY'
+
+for directory in os.listdir(read_path):
+	path = read_path + directory + '/'
+	print('Generating for: ' + path)
+	os.mkdir(write_path + directory)
+	write_file = write_path + directory + '/generated_summary.txt'
+
+	summ = Summary()
+	generated_summary = summ.summarize(path)
+	with open(write_file, 'w') as fd:
+		fd.write(generated_summary)

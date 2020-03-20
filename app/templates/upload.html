@@ -1,1 +1,8 @@
 <h1>Page to upload documents</h1>
+
+<form enctype="multipart/form-data" method="POST">
+	{% csrf_token %}
+  <label for="files">Select files: </label>
+  <input type="file" id="files" name="files" multiple><br><br>
+  <input type="submit">
+</form>

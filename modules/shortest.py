@@ -8,10 +8,9 @@ class Graph():
 	def maxDistance(self, dist, sptSet): 
 		maximum = float('-inf')
 		for v in range(self.V): 
-			if dist[v] > maximum and sptSet[v] == False: 
+			if dist[v] >= maximum and sptSet[v] == False: 
 				maximum = dist[v] 
 				max_index = v 
-
 		return max_index
 
 	def getPath(self, parents, src, last):

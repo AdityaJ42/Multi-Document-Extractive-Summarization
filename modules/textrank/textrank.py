@@ -77,7 +77,7 @@ class TextRank:
 			temp = 0
 			for j in range(len(keyword_vec)):
 				temp += cosine_similarity(sent_vec[i].reshape(1, 100), keyword_vec[j].reshape(1, 100))[0][0]
-			self.sentence_keyword_similarity[i] = round(temp / len(keyword_vec), 3)
+			self.sentence_keyword_similarity[i] = temp / len(keyword_vec)
 
 
 	def similarity_matrix(self, n, vectors, keyword_embeddings):
@@ -86,9 +86,8 @@ class TextRank:
 		for i in range(n):
 			for j in range(n):
 				if i != j:
-					sim_mat[i][j] = cosine_similarity(vectors[i].reshape(1, 100), vectors[j].reshape(1, 100))
-					for k in keyword_embeddings:
-						sim_mat[i][j] += cosine_similarity(vectors[i].reshape(1, 100), k.reshape(1, 100))
+					sim_mat[i][j] = cosine_similarity(vectors[i].reshape(1, 100), vectors[j].reshape(1, 100))[0][0]
+					sim_mat[i][j] += (self.sentence_keyword_similarity[i] + self.sentence_keyword_similarity[j]) / 2
 		return sim_mat
 
 
@@ -97,6 +96,6 @@ class TextRank:
 		scores = nx.pagerank(nx_graph)
 		sentence_ranks = sorted(((scores[i], s) for i, s in enumerate(sentences)), reverse=True)
 		extracted_sentences = []
-		for i in range(8):
+		for i in range(10):
 			extracted_sentences.append(sentence_ranks[i][1])
 		return '\n'.join(extracted_sentences)
