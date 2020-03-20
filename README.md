@@ -16,6 +16,6 @@ pip3 install -r requirements.txt
 python3 manage.py runserver
 ```
 
-To view the website visit (http://localhost:8000)
+To view the website visit http://localhost:8000
 
 Project Whitebook - [PDF](https://drive.google.com/open?id=1njlH25-RpthdMTs8QLQIBKce9GtS2tSR)
