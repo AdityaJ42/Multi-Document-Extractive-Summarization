@@ -1,6 +1,6 @@
 # Multi-Document-Extractive-Summarization
 
-## The implemented system look to use either sinle or multiple documents uploaded by the user, break down the contents and extract those sentences which are most relevant to the content, thereby generating a summary of the document cluster.
+The implemented system look to use either sinle or multiple documents uploaded by the user, break down the contents and extract those sentences which are most relevant to the content, thereby generating a summary of the document cluster.
 
 ## Environment Setup
 ### Pre-requisites
