@@ -1,12 +1,39 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
+from .models import Files
+from summarizer.settings import BASE_DIR
+import os
+from modules.summary import Summary
 
 
-def home(request):
-	return render(request, 'index.html', {})
+# def home(request):
+# 	return render(request, 'index.html', {})
 
 
 def summary(request):
 	if request.method == 'GET':
-		return render(request, 'upload.html', {})
+		return render(request, 'index.html', {})
 	elif request.method == 'POST':
-		return render(request, 'summary.html', {'names': request.FILES.getlist('files')})
+		for i in request.FILES.getlist('files'):
+			f = Files()
+			f.file = i
+			print(i)
+			f.save()
+
+		read_path = BASE_DIR + '/media/files/'
+		write_path = BASE_DIR + '/generated_summary/'
+
+		summ = Summary()
+		generated_summary = summ.summarize(read_path)
+
+		write_file = write_path + '/generated_summary.txt'
+		with open(write_file, 'w') as fd:
+			fd.write(generated_summary)
+
+		return render(request, 'summary.html', {'summary': generated_summary})
+
+
+def delete_files(request):
+	for files in os.listdir(BASE_DIR + '/media/files/'):
+		os.remove(BASE_DIR + '/media/files/' + files)
+	os.remove(BASE_DIR + '/generated_summary/generated_summary.txt')
+	return redirect(summary)

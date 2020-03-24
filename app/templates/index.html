@@ -1,11 +1,15 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>Summary Generator</title>
+	<title>File Upload</title>
 </head>
 <body>
-	<h1>HOME</h1>
-	<a href="{% url 'app:upload' %}">Upload</a>
-	<a href="{% url 'app:display' %}">Summary</a>
+	<h1>Upload Documents Here</h1>
+	<form enctype="multipart/form-data" method="POST">
+		{% csrf_token %}
+		<label for="files" id="fileLabel">Select files: </label>
+		<input type="file" id="files" name="files" multiple class="form-control form-control-lg"><br><br>
+		<input type="submit">
+	</form>
 </body>
 </html>

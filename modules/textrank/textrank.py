@@ -8,6 +8,7 @@ from sklearn.metrics.pairwise import cosine_similarity
 import networkx as nx
 import pke
 from nltk.corpus import stopwords
+from summarizer.settings import BASE_DIR
 
 # nltk.download('punkt')
 # nltk.download('stopwords')
@@ -17,7 +18,7 @@ stopwords = stopwords.words('english')
 
 def get_embeddings():
 	embedding = {}
-	f = open('./textrank/glove.6B.100d.txt', encoding='utf-8')
+	f = open(BASE_DIR + '/modules/textrank/glove.6B.100d.txt', encoding='utf-8')
 	for line in f:
 		values = line.split()
 		word = values[0]
@@ -96,6 +97,6 @@ class TextRank:
 		scores = nx.pagerank(nx_graph)
 		sentence_ranks = sorted(((scores[i], s) for i, s in enumerate(sentences)), reverse=True)
 		extracted_sentences = []
-		for i in range(10):
+		for i in range(min(10, len(sentences))):
 			extracted_sentences.append(sentence_ranks[i][1])
 		return '\n'.join(extracted_sentences)

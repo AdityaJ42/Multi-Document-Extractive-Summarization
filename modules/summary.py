@@ -1,8 +1,9 @@
 import os
-from preprocess import Preprocessor
-from keyphrase import Keyphrase
-from textrank.textrank import TextRank
-from shortest import Graph
+from summarizer.settings import BASE_DIR
+from .preprocess import Preprocessor
+from .keyphrase import Keyphrase
+from .textrank.textrank import TextRank
+from .shortest import Graph
 
 
 class Summary:
@@ -58,6 +59,7 @@ class Summary:
 
 		# Recompute similarity matrix for reduced sentences
 		tr.sent_to_vectors(extracted_sentences)
+		tr.sent_keyword_similarity(tr.sentence_vectors, tr.keyword_vectors)
 		matrix = tr.similarity_matrix(len(extracted_sentences), tr.sentence_vectors, tr.keyword_vectors)
 
 		# Create summary based on sentence scores after TextRank iterations
@@ -66,17 +68,3 @@ class Summary:
 		
 		# View Summary
 		return self.summary
-
-read_path = 'PATH_TO_INPUT_DOCS'
-write_path = 'PATH_TO_OUTPUT_SUMMARY'
-
-for directory in os.listdir(read_path):
-	path = read_path + directory + '/'
-	print('Generating for: ' + path)
-	os.mkdir(write_path + directory)
-	write_file = write_path + directory + '/generated_summary.txt'
-
-	summ = Summary()
-	generated_summary = summ.summarize(path)
-	with open(write_file, 'w') as fd:
-		fd.write(generated_summary)

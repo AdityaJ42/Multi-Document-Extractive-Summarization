@@ -6,7 +6,7 @@ class Graph():
 		self.parent = {}
 
 	def maxDistance(self, dist, sptSet): 
-		maximum = float('-inf')
+		maximum = -1
 		for v in range(self.V): 
 			if dist[v] >= maximum and sptSet[v] == False: 
 				maximum = dist[v] 
@@ -24,11 +24,11 @@ class Graph():
 
 	def dijkstra(self, src, last): 
 
-		dist = [float('-inf')] * self.V 
+		dist = [-1] * self.V 
 		dist[src] = 0
 		sptSet = [False] * self.V 
 
-		for cout in range(self.V): 
+		for cout in range(self.V):
 			u = self.maxDistance(dist, sptSet) 
 			sptSet[u] = True
 			for v in range(self.V): 

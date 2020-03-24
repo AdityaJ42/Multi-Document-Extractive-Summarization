@@ -1,8 +1,11 @@
-<h1>Page to display summary</h1>
-
-<h2>Files</h2>
-<ol>
-	{% for i in names %}
-	<li>{{ i }}</li>
-	{% endfor %}
-</ol>
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Summary</title>
+</head>
+<body>
+	<h1>Summary Display Page</h1>
+	<p>{{ summary }}</p>
+	<a href="{% url 'app:delete' %}">Reset</a>
+</body>
+</html>
