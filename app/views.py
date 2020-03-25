@@ -5,10 +5,6 @@ import os
 from modules.summary import Summary
 
 
-# def home(request):
-# 	return render(request, 'index.html', {})
-
-
 def summary(request):
 	if request.method == 'GET':
 		return render(request, 'index.html', {})
@@ -16,7 +12,6 @@ def summary(request):
 		for i in request.FILES.getlist('files'):
 			f = Files()
 			f.file = i
-			print(i)
 			f.save()
 
 		read_path = BASE_DIR + '/media/files/'
