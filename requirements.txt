@@ -6,3 +6,4 @@ pandas
 sklearn
 python-docx
 rouge
+neuralcoref
