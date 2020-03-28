@@ -1,5 +1,17 @@
-#fileLabel{
-	width: 100%;
+.summary{
+	text-align: left;
+	font-size: 14px;
+}
+.submitBtn{
+	padding: 10px;
+}
+.resetBtn{
+	padding: 10px;
+	margin: 20px;
+}
+.helpText{
+	font-size: 16px;
+	margin: 10px;
 }
 #one
 {
@@ -76,12 +88,7 @@
 .it .btn-orange img {
     width: 30px;
 }
-p
-{
-  font-size:16px;
-  text-align:center;
-  margin:30px 0px;
-}
+
 .it #uploader .docErr
 {
 	position: absolute;

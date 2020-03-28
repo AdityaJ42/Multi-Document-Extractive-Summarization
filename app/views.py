@@ -4,12 +4,20 @@ from summarizer.settings import BASE_DIR
 import os
 from modules.summary import Summary
 
+def delete_all():
+	for files in os.listdir(BASE_DIR + '/media/files/'):
+		os.remove(BASE_DIR + '/media/files/' + files)
+	os.remove(BASE_DIR + '/generated_summary/generated_summary.txt')
+
 
 def summary(request):
 	if request.method == 'GET':
+		if os.listdir(BASE_DIR + '/media/files/'):
+			delete_all()
 		return render(request, 'index.html', {})
 	elif request.method == 'POST':
 		for i in request.FILES.getlist('files'):
+			print(i)
 			f = Files()
 			f.file = i
 			f.save()
@@ -28,7 +36,5 @@ def summary(request):
 
 
 def delete_files(request):
-	for files in os.listdir(BASE_DIR + '/media/files/'):
-		os.remove(BASE_DIR + '/media/files/' + files)
-	os.remove(BASE_DIR + '/generated_summary/generated_summary.txt')
+	delete_all()
 	return redirect(summary)

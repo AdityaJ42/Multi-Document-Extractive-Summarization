@@ -1,11 +1,16 @@
-<!DOCTYPE html>
-<html>
-<head>
-	<title>Summary</title>
-</head>
-<body>
-	<h1>Summary Display Page</h1>
+{% extends 'base.html' %}
+
+{% block title %}
+Summary
+{% endblock %}
+
+{% block content %}
+<h3 class="text-center">Generated Summary</h3>
+<div class="summary">
 	<p>{{ summary }}</p>
-	<a href="{% url 'app:delete' %}">Reset</a>
-</body>
-</html>
+</div>
+
+<div class="col-sm-offset-10 col-sm-6">
+	<a class="btn btn-danger btn-sm resetBtn" href="{% url 'app:delete' %}" role="button">Reset</a>
+</div>
+{% endblock %}
