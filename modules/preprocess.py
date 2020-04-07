@@ -27,7 +27,7 @@ class Preprocessor:
 
 
 	def clean(self, text):
-		return text.strip().replace('\n', ' ')
+		return text.strip().replace('\n', ' ').replace('_', '')
 
 
 

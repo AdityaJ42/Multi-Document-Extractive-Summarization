@@ -1,17 +1,29 @@
+.header{
+	text-align: center;
+	width: 50%;
+	margin: 15px 25%;
+	padding: 15px;
+	font-family: 'Ubuntu', sans-serif;
+	background: rgb(163, 188, 230);
+}
+.title{
+	font-size: 45px;
+}
 .summary{
 	text-align: left;
-	font-size: 14px;
+	font-size: 16px;
 }
 .submitBtn{
 	padding: 10px;
 }
 .resetBtn{
 	padding: 10px;
-	margin: 20px;
+	margin: 10px;
 }
 .helpText{
 	font-size: 16px;
-	margin: 10px;
+	margin: 15px 0 0 0;
+	font-family: 'Ubuntu', sans-serif;
 }
 #one
 {

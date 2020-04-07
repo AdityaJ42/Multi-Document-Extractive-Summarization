@@ -5,8 +5,6 @@ Upload Files
 {% endblock %}
 
 {% block content %}
-<h3 class="text-center">My Documents</h3>
-
 <div class="row">
 	<div class="col-sm-offset-3 col-sm-6 form-group text-center">
 		<p class="helpText">Upload a single document or multiple documents</p><br>
@@ -21,13 +19,10 @@ Upload Files
 				<div class="fileUpload btn btn-orange" style="text-align: center;">
 					<img src="https://image.flaticon.com/icons/svg/136/136549.svg" class="icon">
 					<span class="upl" id="upload">Upload document</span>
-					<input type="file" class="upload up" name="files" id="up" multiple />
+					<input type="file" class="upload up" name="files" id="up" multiple onchange="text()" />
                 </div><!-- btn-orange -->
 			</div><!-- col-6 -->
 
-			<div class="col-sm-1">
-				<a class="btn-check"><i class="fa fa-times"></i></a>
-			</div>
 			<br><br><br>
 			<div class="col-sm-offset-5 submitBtn">
 				<button type="submit" class="btn btn-primary"><i class="fa fa-paper-plane"></i> Submit</button>
@@ -35,4 +30,10 @@ Upload Files
 		</form>
 	</div>
 </div>
+
+<script type="text/javascript">
+	function text(){
+		document.getElementById("upload").textContent = "Documents Uploaded";
+	}
+</script>
 {% endblock %}
