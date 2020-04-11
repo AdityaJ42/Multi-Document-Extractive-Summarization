@@ -8,8 +8,8 @@ stopwords = stopwords.words('english')
 
 
 class Preprocessor:
-	def __init__(self):
-		pass
+	def __init__(self, regenerate):
+		self.greedyness = 0.55 if not regenerate else 0.6
 
 
 	def read_text(self, file):
@@ -30,10 +30,9 @@ class Preprocessor:
 		return text.strip().replace('\n', ' ').replace('_', '')
 
 
-
 	def resolve_pronoun(self, text):
 		nlp = spacy.load('en')
-		neuralcoref.add_to_pipe(nlp, greedyness=0.55)
+		neuralcoref.add_to_pipe(nlp, greedyness=self.greedyness)
 		doc = nlp(text)
 
 		if doc._.has_coref:

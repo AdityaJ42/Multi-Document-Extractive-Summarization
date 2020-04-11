@@ -13,9 +13,9 @@ class Summary:
 		self.regenerate = regenerate
 
 	def summarize(self, file_path):
-		pp = Preprocessor()
+		pp = Preprocessor(self.regenerate)
+		kp = Keyphrase(self.regenerate)
 		tr = TextRank()
-		kp = Keyphrase()
 		contents = ""
 
 		# Read the single/multiple documents uploaded by user

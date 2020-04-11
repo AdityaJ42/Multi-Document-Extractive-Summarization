@@ -28,7 +28,7 @@ def summary(request, regenerate=False):
 		read_path = BASE_DIR + '/media/files/'
 		write_path = BASE_DIR + '/generated_summary/'
 
-		summ = Summary()
+		summ = Summary(regenerate)
 		generated_summary = summ.summarize(read_path)
 
 		write_file = write_path + '/generated_summary.docx'
