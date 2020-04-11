@@ -12,30 +12,36 @@ def delete_all():
 	os.remove(BASE_DIR + '/generated_summary/generated_summary.docx')
 
 
-def summary(request, regenerate=False):
+def create_summary(regenerate=False):
+	if regenerate:
+		os.remove(BASE_DIR + '/generated_summary/generated_summary.docx')
+
+	read_path = BASE_DIR + '/media/files/'
+	write_file = BASE_DIR + '/generated_summary/generated_summary.docx'
+
+	summ = Summary(regenerate)
+	generated_summary = summ.summarize(read_path)
+
+	doc = Document()
+	doc.add_paragraph(generated_summary)
+	doc.save(write_file)
+
+	return generated_summary
+
+
+def summary(request):
 	if request.method == 'GET':
 		if os.listdir(BASE_DIR + '/media/files/'):
 			delete_all()
 		return render(request, 'index.html', {})
+
 	elif request.method == 'POST':
-		if regenerate:
-			pass
 		for i in request.FILES.getlist('files'):
 			f = Files()
 			f.file = i
 			f.save()
 
-		read_path = BASE_DIR + '/media/files/'
-		write_path = BASE_DIR + '/generated_summary/'
-
-		summ = Summary(regenerate)
-		generated_summary = summ.summarize(read_path)
-
-		write_file = write_path + '/generated_summary.docx'
-		doc = Document()
-		doc.add_paragraph(generated_summary)
-		doc.save(write_file)
-
+		generated_summary = create_summary()
 		return render(request, 'summary.html', {'summary': generated_summary})
 
 
@@ -45,7 +51,8 @@ def delete_files(request):
 
 
 def regenerate(request):
-	summary(request, regenerate=True)
+	generated_summary = create_summary(regenerate=True)
+	return render(request, 'summary.html', {'summary': generated_summary})
 
 def download(request):
 	fp = BASE_DIR + '/generated_summary/generated_summary.docx'
