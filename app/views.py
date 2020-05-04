@@ -41,7 +41,7 @@ def summary(request):
 			f.file = i
 			f.save()
 
-		generated_summary = create_summary()
+		generated_summary = create_summary(regenerate=False)
 		return render(request, 'summary.html', {'summary': generated_summary})
 
 

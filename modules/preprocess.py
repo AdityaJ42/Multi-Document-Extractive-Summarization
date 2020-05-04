@@ -9,7 +9,7 @@ stopwords = stopwords.words('english')
 
 class Preprocessor:
 	def __init__(self, regenerate):
-		self.greedyness = 0.55 if not regenerate else 0.6
+		self.greedyness = 0.3 if not regenerate else 0.55
 
 
 	def read_text(self, file):

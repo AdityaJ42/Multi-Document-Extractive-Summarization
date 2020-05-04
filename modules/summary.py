@@ -1,9 +1,9 @@
 import os
-from summarizer.settings import BASE_DIR
 from .preprocess import Preprocessor
 from .keyphrase import Keyphrase
 from .textrank.textrank import TextRank
 from .shortest import Graph
+from summarizer.settings import BASE_DIR
 
 
 class Summary:
@@ -20,11 +20,7 @@ class Summary:
 
 		# Read the single/multiple documents uploaded by user
 		for file in os.listdir(file_path):
-			ftype = file.split('.')[-1]
-			if ftype == 'docx':
-				contents += pp.read_docx(file_path + file)
-			else:
-				contents += pp.read_text(file_path + file)
+			contents += pp.read_text(file_path + file)
 
 		# Combining paragraphs generate one large doc content
 		complete_content = pp.clean(contents)
@@ -35,13 +31,18 @@ class Summary:
 		# Tokenize the consolidated data into sentences
 		sentences = pp.get_sentences(resolved_content)
 
-		# Maintain the original sentences of the documents for extraction
-		original_sentences = pp.get_sentences(complete_content)
-		if len(original_sentences) < len(sentences):
-			sentences = sentences[:len(original_sentences)]
-		
 		# Extraction of keyphrases
 		self.keywords = kp.get_keyphrases(resolved_content)
+
+		# Maintain the original sentences of the documents for extraction
+		original_sentences = pp.get_sentences(complete_content)
+
+		# Removal of stopwords
+		sentences = pp.remove_stopwords(sentences)
+		if len(original_sentences) != len(sentences):
+			index = min(len(original_sentences), len(sentences))
+			sentences = sentences[:index]
+			original_sentences = original_sentences[:index]
 
 		# Create a vector for the sentences
 		tr.sent_to_vectors(sentences)
@@ -51,7 +52,7 @@ class Summary:
 
 		# Get averaged sentence to keyword similarity
 		tr.sent_keyword_similarity(tr.sentence_vectors, tr.keyword_vectors)
-
+		
 		# Create a similarity matrix i.e. graph for textrank
 		matrix = tr.similarity_matrix(len(sentences), tr.sentence_vectors, tr.keyword_vectors)
 
