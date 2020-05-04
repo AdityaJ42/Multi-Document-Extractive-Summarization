@@ -14,6 +14,7 @@ python3 -m venv venv
 source venv/bin/activate
 pip3 install -r requirements.txt
 python3 manage.py runserver
+pip install git+https://github.com/boudinfl/pke.git
 ```
 
 To view the website visit http://localhost:8000
