@@ -37,7 +37,7 @@ Regenerated Summary
 Project Whitebook - [PDF](https://drive.google.com/open?id=1njlH25-RpthdMTs8QLQIBKce9GtS2tSR)
 
 Team Members:
-  *[Aditya Jeswani](https://github.com/adityaj42)
-  *[Shruti More](https://github.com/shrutim24)
-  *[Kabir Kapoor](https://github.com/KabirKapoor)
-  *[Sifat Sheikh](https://github.com/sifatyk)
+..*[Aditya Jeswani](https://github.com/adityaj42)
+..*[Shruti More](https://github.com/shrutim24)
+..*[Kabir Kapoor](https://github.com/KabirKapoor)
+..*[Sifat Sheikh](https://github.com/sifatyk)
