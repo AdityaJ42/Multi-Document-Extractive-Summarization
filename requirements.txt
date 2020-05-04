@@ -7,3 +7,4 @@ sklearn
 python-docx
 rouge
 neuralcoref
+git+https://github.com/boudinfl/pke.git
