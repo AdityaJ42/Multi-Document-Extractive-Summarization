@@ -34,6 +34,7 @@ class Preprocessor:
 		nlp = spacy.load('en')
 		neuralcoref.add_to_pipe(nlp, greedyness=self.greedyness)
 		doc = nlp(text)
+		resolved_text = text
 
 		if doc._.has_coref:
 			resolved_text = doc._.coref_resolved

@@ -20,7 +20,10 @@ class Summary:
 
 		# Read the single/multiple documents uploaded by user
 		for file in os.listdir(file_path):
-			contents += pp.read_text(file_path + file)
+			if file.split('.')[-1] == 'docx':
+				contents += pp.read_docx(file_path + file)
+			else:
+				contents += pp.read_text(file_path + file)
 
 		# Combining paragraphs generate one large doc content
 		complete_content = pp.clean(contents)
