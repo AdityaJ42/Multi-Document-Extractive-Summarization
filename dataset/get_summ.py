@@ -1,3 +1,4 @@
+# Extract summaries and format from original data
 import os
 
 read_path = 'ref_sum'

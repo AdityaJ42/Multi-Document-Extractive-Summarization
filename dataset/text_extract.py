@@ -1,3 +1,4 @@
+# Extract documents and format from original data
 import re
 import os
 
