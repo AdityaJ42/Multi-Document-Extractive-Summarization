@@ -3,3 +3,4 @@ __pycache__
 *.pyc
 db.sqlite3
 glove.6B.100d.txt
+.vscode
